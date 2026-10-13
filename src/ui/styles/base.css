@@ -1,0 +1,303 @@
+@font-face {
+  font-family: 'Ma Shan Zheng';
+  src: url('../../assets/fonts/msz-subset.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --bg0: #07080a;
+  --bg1: #120f0c;
+  --bg2: #1c1713;
+  --ink: #f3e9d2;
+  --ink2: #c9b896;
+  --ink3: #8a7a62;
+  --gold: #d8a84a;
+  --gold-hi: #ffe08a;
+  --gold-lo: #7a5418;
+  --red: #ff4d5e;
+  --blue: #4aa3ff;
+  --green: #5fe08a;
+  --purple: #b08aff;
+  --panel: linear-gradient(180deg, rgba(34, 27, 20, 0.94), rgba(14, 11, 9, 0.96));
+  --panel-solid: #16120e;
+  --line: rgba(216, 168, 74, 0.42);
+  --line-soft: rgba(216, 168, 74, 0.18);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.5);
+  --font-title: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', 'Kaiti SC', serif;
+  --font-num: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-body: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg0);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#app {
+  position: fixed;
+  inset: 0;
+}
+
+.world-host {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.world-canvas {
+  display: block;
+  outline: none;
+  touch-action: none;
+}
+
+.ui-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ui-root > * {
+  pointer-events: auto;
+}
+
+.ui-root > .battle-hud {
+  pointer-events: none;
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+svg.gi {
+  display: inline-block;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------ buttons */
+
+.btn {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #3a2e22, #1e1812);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 230, 180, 0.12), 0 2px 6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.12s, box-shadow 0.15s, border-color 0.15s, filter 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  border-color: var(--gold-hi);
+  box-shadow: inset 0 1px 0 rgba(255, 230, 180, 0.2), 0 0 14px rgba(255, 200, 100, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn.small {
+  font-size: 13px;
+  padding: 4px 10px;
+}
+
+.btn.big {
+  font-size: 20px;
+  padding: 12px 28px;
+}
+
+.btn.gold {
+  background: linear-gradient(180deg, #e2b257, #9a6a1c);
+  color: #1e1206;
+  border-color: #ffe08a;
+  font-weight: 700;
+}
+
+.btn.gold:hover {
+  filter: brightness(1.12);
+}
+
+.btn.danger {
+  background: linear-gradient(180deg, #7a2028, #3a0c10);
+  border-color: #ff8a8a;
+}
+
+.btn.icon {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.btn.on {
+  border-color: var(--gold-hi);
+  background: linear-gradient(180deg, #5a4426, #2a1e12);
+  box-shadow: 0 0 12px rgba(255, 220, 140, 0.4);
+}
+
+.btn.disabled,
+.btn:disabled {
+  opacity: 0.45;
+  filter: grayscale(0.6);
+  cursor: default;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--line-soft);
+  border-radius: 9px;
+  pointer-events: none;
+}
+
+.title-font {
+  font-family: var(--font-title);
+  font-weight: normal;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  max-width: 300px;
+  padding: 8px 12px;
+  background: rgba(14, 11, 9, 0.97);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+  pointer-events: none;
+  box-shadow: var(--shadow);
+  white-space: pre-line;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 22%;
+  transform: translateX(-50%);
+  z-index: 900;
+  background: rgba(20, 14, 10, 0.95);
+  border: 1px solid #ff8a6a;
+  color: #ffd8c8;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 15px;
+  pointer-events: none;
+  animation: toastIn 2.2s ease forwards;
+}
+
+@keyframes toastIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  10%,
+  80% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ modal */
+
+.modal-back {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(4, 3, 2, 0.72);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  max-width: min(1100px, 94vw);
+  max-height: 88vh;
+  overflow: auto;
+  padding: 22px 26px;
+}
+
+.modal h2 {
+  font-family: var(--font-title);
+  font-weight: normal;
+  font-size: 34px;
+  margin: 0 0 12px;
+  color: var(--gold-hi);
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5a4426;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.screen-fade {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.screen-fade.on {
+  opacity: 1;
+}

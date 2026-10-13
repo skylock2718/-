@@ -14,6 +14,7 @@ import { CardView } from '../components/CardView';
 import { DMG_COLOR, Icon, NODE_DESC, NODE_ICON, NODE_NAME, STATUS_COLOR, STATUS_DESC, STATUS_ICON, SURFACE_DESC, SURFACE_NAME, TERRAIN_DESC, TERRAIN_NAME, UI_ICONS } from '../icons';
 import { KEYWORD_DESC, keywordLabel, TRIBE_NAMES } from '../text';
 import { useViewport } from '../useViewport';
+import { TipCoach } from './TipCoach';
 
 export function BattleScreen({ ctl }: { ctl: BattleController }) {
   useTicker(battleTick);
@@ -67,6 +68,7 @@ export function BattleScreen({ ctl }: { ctl: BattleController }) {
       <Banner />
       <RerollPrompt />
       <CheckModal host={bigHost} />
+      <TipCoach ctl={ctl} />
       {b.over && <div class={`battle-end-flash ${b.winner === me ? 'win' : 'lose'}`} />}
     </div>
   );

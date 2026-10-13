@@ -1579,6 +1579,63 @@
   }
 }
 
+/* ---------- tip coach */
+
+.tip-coach {
+  position: absolute;
+  top: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(400px, 92vw);
+  padding: 10px 14px 12px;
+  background: linear-gradient(180deg, rgba(20, 34, 52, 0.97), rgba(10, 16, 26, 0.97));
+  border: 1px solid rgba(140, 200, 255, 0.55);
+  border-radius: 12px;
+  box-shadow: var(--shadow), 0 0 22px rgba(80, 160, 255, 0.25);
+  pointer-events: auto;
+  animation: tipIn 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  z-index: 40;
+}
+
+@keyframes tipIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+}
+
+.tc-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #bfe6ff;
+  font-size: 15px;
+}
+
+.tc-head svg {
+  font-size: 20px;
+}
+
+.tc-count {
+  margin-left: auto;
+  font-family: var(--font-num);
+  font-size: 11px;
+  color: rgba(191, 230, 255, 0.6);
+}
+
+.tip-coach p {
+  margin: 6px 0 10px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.tc-btns {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
 /* ---------- phones / narrow windows */
 
 @media (max-width: 760px) {
@@ -1732,5 +1789,9 @@
 
   .hover-tip {
     display: none;
+  }
+
+  .tip-coach {
+    top: 70px;
   }
 }

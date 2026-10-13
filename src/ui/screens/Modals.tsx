@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks';
-import { app, closeModal, openModal, updateSettings, type Modal } from '../../app/game';
+import { app, closeModal, openModal, toast, updateSettings, type Modal } from '../../app/game';
+import { resetTips } from '../battle/TipCoach';
 import { useStore, type Settings } from '../../app/store';
 import { audio } from '../../audio/audio';
 import { canUpgrade, cardOf, getCard } from '../../core/registry';
@@ -224,6 +225,19 @@ function SettingsPanel() {
         </div>
         <Toggle label="屏幕震动" k="shake" />
         <Toggle label="新手提示" k="tips" />
+        <div class="set-row toggle">
+          <span>重新显示所有提示</span>
+          <button
+            class="btn small"
+            onClick={() => {
+              resetTips();
+              updateSettings({ tips: true });
+              toast('新手提示已重置');
+            }}
+          >
+            重置
+          </button>
+        </div>
       </div>
     </div>
   );

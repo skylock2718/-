@@ -138,8 +138,16 @@ export class World {
     return () => this.frameFns.delete(fn);
   }
 
-  private loop = (): void => {
+  /** frames per second cap (0 = uncapped); menus run the backdrop slower to save power */
+  fpsCap = 0;
+  private lastFrame = 0;
+
+  private loop = (now?: number): void => {
     this.raf = requestAnimationFrame(this.loop);
+    if (this.fpsCap > 0 && now !== undefined) {
+      if (now - this.lastFrame < 1000 / this.fpsCap - 2) return;
+      this.lastFrame = now;
+    }
     const dt = Math.min(0.05, this.clock.getDelta());
     this.time += dt;
     this.cam.update(dt, this.camera);

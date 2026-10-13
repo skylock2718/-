@@ -78,7 +78,7 @@ export function RewardScreen() {
                     <button class={`br-item ${taken ? 'taken' : ''}`} disabled={pr.claimed.boss} onClick={() => claimBossRelic(id)}>
                       <RelicIcon id={id} size={56} />
                       <b>{r.name}</b>
-                      <span>{r.text}</span>
+                      <span class="br-text">{r.text}</span>
                     </button>
                   );
                 })}

@@ -26,6 +26,8 @@ export function showBackdrop(biome: BiomeId, heroIds?: string[], die = true): vo
   try {
     scene = new TitleScene(stage, biome, heroes, die);
     key = k;
+    // the backdrop is decoration: a gentle frame rate keeps menus snappy and cool
+    stage.world.fpsCap = 30;
   } catch (e) {
     console.error(e);
     scene = null;
@@ -34,6 +36,8 @@ export function showBackdrop(biome: BiomeId, heroIds?: string[], die = true): vo
 }
 
 export function hideBackdrop(): void {
+  const stage = getStage();
+  if (stage) stage.world.fpsCap = 0;
   scene?.dispose();
   scene = null;
   key = '';

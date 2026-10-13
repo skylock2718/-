@@ -1172,7 +1172,7 @@ option {
   box-shadow: 0 0 24px rgba(255, 90, 60, 0.35);
 }
 
-.br-item span {
+.br-item .br-text {
   font-size: 13px;
   color: var(--ink2);
   line-height: 1.5;
@@ -3019,7 +3019,7 @@ label.check {
   align-items: center;
 }
 
-.codex-row span {
+.codex-row > div > span {
   color: var(--ink2);
 }
 

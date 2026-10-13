@@ -10,6 +10,7 @@ import { initStage } from './app/stage';
 import { app } from './app/game';
 import { audio } from './audio/audio';
 import { App } from './ui/App';
+import * as flowApi from './run/flow';
 import { debugEndBattle, flow } from './run/flow';
 
 registerContent();
@@ -52,6 +53,7 @@ requestAnimationFrame(() => {
 if (import.meta.env.DEV) {
   (window as unknown as { __debug: unknown }).__debug = {
     endBattle: debugEndBattle,
+    api: flowApi,
     /** screen position of a board tile's top centre (for automated UI tests) */
     tileScreen(x: number, y: number) {
       const ctl = app.get().battle;

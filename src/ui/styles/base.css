@@ -65,9 +65,12 @@ body {
 
 .ui-root {
   position: fixed;
-  inset: 0;
+  /* keep HUD and menus clear of phone status / home bars */
+  inset: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px) 0;
   z-index: 10;
   pointer-events: none;
+  /* fixed-position screens and overlays inside resolve against this box */
+  transform: translateZ(0);
 }
 
 .ui-root > * {
@@ -300,4 +303,35 @@ svg.gi {
 
 .screen-fade.on {
   opacity: 1;
+}
+
+/* ------------------------------------------------------------------ reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-rays,
+  .ea-rays,
+  .ea-icon,
+  .ea-motes i,
+  .lu-burst,
+  .chest-rays,
+  .map-node.reach,
+  .hs-go,
+  .roll-btn,
+  .tl-die,
+  .cf-flame,
+  .cf-spark,
+  .art-rays,
+  .card-shine,
+  .end-turn.pulse {
+    animation: none !important;
+  }
+
+  .title-item,
+  .reward-row,
+  .event-opt,
+  .cc-slot,
+  .feat-card,
+  .rest-opt {
+    animation-duration: 0.01s !important;
+  }
 }

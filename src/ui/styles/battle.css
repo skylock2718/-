@@ -1583,10 +1583,9 @@
 
 .tip-coach {
   position: absolute;
-  top: 84px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(400px, 92vw);
+  left: 12px;
+  bottom: 222px;
+  width: min(340px, 92vw);
   padding: 10px 14px 12px;
   background: linear-gradient(180deg, rgba(20, 34, 52, 0.97), rgba(10, 16, 26, 0.97));
   border: 1px solid rgba(140, 200, 255, 0.55);
@@ -1600,7 +1599,7 @@
 @keyframes tipIn {
   from {
     opacity: 0;
-    transform: translate(-50%, -12px);
+    transform: translateY(12px);
   }
 }
 
@@ -1793,5 +1792,8 @@
 
   .tip-coach {
     top: 70px;
+    bottom: auto;
+    left: 50%;
+    margin-left: max(-170px, -46vw);
   }
 }

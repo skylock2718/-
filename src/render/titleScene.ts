@@ -30,7 +30,8 @@ export class TitleScene {
     const world = stage.world;
     const map = generateMap({ biome, w: 9, h: 9, players: 2, seed: 7 + biome.length * 13, events: 2 });
     this.board = new BoardView(world, map.board, stage.particles);
-    world.cam.autoRotate = 0.06;
+    const still = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    world.cam.autoRotate = still ? 0 : 0.06;
     world.cam.goalDistance = 19;
     world.cam.distance = 26;
     world.cam.goalElevation = 0.62;

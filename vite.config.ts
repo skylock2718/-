@@ -12,6 +12,10 @@ export default defineConfig({
   build: {
     target: 'es2022',
     chunkSizeWarningLimit: 2000,
+    rollupOptions: {
+      // three.js changes rarely: keep it in its own long-cached chunk
+      output: { manualChunks: { three: ['three'] } },
+    },
   },
   server: { host: true, port: 5173 },
 });

@@ -504,6 +504,8 @@ export class BattleController {
 
   private onKey(e: KeyboardEvent): void {
     if ((e.target as HTMLElement)?.tagName === 'INPUT') return;
+    // a modal (menu, settings) is open: keys belong to it
+    if (document.querySelector('.modal-back')) return;
     const cam = this.world.cam;
     switch (e.key.toLowerCase()) {
       case 'q':
@@ -529,7 +531,8 @@ export class BattleController {
         cam.pan(1, 0);
         break;
       case 'escape':
-        this.cancel();
+        if (this.state.get().mode.kind === 'idle') window.dispatchEvent(new CustomEvent('battle-menu'));
+        else this.cancel();
         break;
       case ' ':
       case 'enter':

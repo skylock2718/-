@@ -5,6 +5,7 @@
 //   icon: 'name'      (data definitions)
 //   ic('name')        (UI helper)
 //   icon="name"       (JSX prop)
+//   <Icon name="name" (JSX component)
 import { readFileSync, writeFileSync, readdirSync, statSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,7 +23,7 @@ function walk(dir, acc = []) {
   return acc;
 }
 
-const patterns = [/icon:\s*['"]([a-z0-9-]+)['"]/g, /\bic\(\s*['"]([a-z0-9-]+)['"]\s*\)/g, /icon=['"]([a-z0-9-]+)['"]/g, /icons?:\s*\[([^\]]*)\]/g];
+const patterns = [/icon:\s*['"]([a-z0-9-]+)['"]/g, /\bic\(\s*['"]([a-z0-9-]+)['"]\s*\)/g, /icon=['"]([a-z0-9-]+)['"]/g, /<Icon[^>]*?\bname=['"]([a-z0-9-]+)['"]/g, /icons?:\s*\[([^\]]*)\]/g];
 const used = new Map();
 for (const file of walk(join(root, 'src'))) {
   const src = readFileSync(file, 'utf8');

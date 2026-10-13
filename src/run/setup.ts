@@ -79,14 +79,14 @@ export function buildEncounterBattle(o: { seed: number; player: PlayerSide; enco
   };
 }
 
-export function buildSkirmish(o: { seed: number; sides: PlayerSide[]; biome: 'verdant' | 'ashen' | 'astral'; size?: number; ffa?: boolean; karmic?: boolean }): BattleSetup {
+export function buildSkirmish(o: { seed: number; sides: PlayerSide[]; biome: 'verdant' | 'ashen' | 'astral'; size?: number; ffa?: boolean; teams?: number[]; karmic?: boolean }): BattleSetup {
   const n = o.sides.length;
   const size = o.size ?? (n > 2 ? 11 : 9);
   const map = generateMap({ biome: o.biome, w: size, h: size, players: n, seed: o.seed, events: n > 2 ? 2 : 2 });
   const players: PlayerSetup[] = o.sides.map((s, i) => ({
     name: s.name ?? s.hero.name,
     isAI: !!s.isAI,
-    team: o.ffa || n === 2 ? i : i === 0 ? 0 : 1,
+    team: o.teams?.[i] ?? (o.ffa || n === 2 ? i : i === 0 ? 0 : 1),
     color: TEAM_COLORS[i % TEAM_COLORS.length],
     commander: s.hero,
     heroHp: s.hp,

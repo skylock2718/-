@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { JSX } from 'preact';
 import type { BattleController } from '../../app/battleController';
+import { openModal } from '../../app/game';
 import { battleTick, battleUi } from '../../app/battleUi';
 import { useStore, useTicker } from '../../app/store';
 import { ABILITY_NAMES, DMG_NAMES, KEYWORD_NAMES, SAVE_NAMES, STATUS_NAMES, type Unit } from '../../core/battle';
@@ -484,6 +485,9 @@ function CamControls({ ctl }: { ctl: BattleController }) {
       </button>
       <button class={`btn icon ${threat ? 'on' : ''}`} data-tip="显示所有敌人的威胁范围（T）" onClick={() => ctl.toggleThreat()}>
         <Icon name={UI_ICONS.threat} />
+      </button>
+      <button class="btn icon" data-tip="菜单（Esc）" onClick={() => openModal({ kind: 'battleMenu' })}>
+        <Icon name={UI_ICONS.settings} />
       </button>
     </div>
   );

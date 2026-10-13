@@ -7,6 +7,57 @@
     <title>命骰远征 · DICEBOUND</title>
     <meta name="description" content="跑团式卡牌战棋 Roguelite：d20 检定、卡牌召唤、高低差地形与局内成长。" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #07080a;
+      }
+      .boot {
+        position: fixed;
+        inset: 0;
+        z-index: 5000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        background: radial-gradient(circle at 50% 42%, #2a1d10, #07080a 70%);
+        transition: opacity 0.6s ease;
+        font-family: 'STKaiti', 'KaiTi', serif;
+      }
+      .boot.done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .boot-die {
+        width: 84px;
+        height: 84px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font: 900 30px Georgia, serif;
+        color: #1a1206;
+        background: linear-gradient(160deg, #ffe08a, #b07a22);
+        clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+        animation: bootSpin 1.6s ease-in-out infinite;
+        filter: drop-shadow(0 0 18px rgba(255, 190, 80, 0.6));
+      }
+      .boot-text {
+        color: #e8c27a;
+        font-size: 26px;
+        letter-spacing: 10px;
+      }
+      @keyframes bootSpin {
+        50% {
+          transform: rotate(180deg) scale(0.9);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app">

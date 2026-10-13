@@ -473,10 +473,11 @@ const BOSS: PassiveDef[] = [
   {
     id: 'boss-goblinking',
     name: '王之战鼓',
-    text: '哥布林王每回合开始时召唤一名哥布林喽啰。',
+    text: '哥布林王每两回合开始时召唤一名哥布林喽啰。',
     icon: 'drum',
     kind: 'boss',
     turnStart: async (b, p) => {
+      if (b.round % 2 === 0) return;
       if (b.unitsOf(p.id).length >= 8) return;
       const h = b.hero(p.id);
       const spot = b.board.area(h, 2).find((t) => b.board.standable(t) && !b.unitAt(t.x, t.y));
@@ -489,21 +490,21 @@ const BOSS: PassiveDef[] = [
   {
     id: 'boss-lich',
     name: '命匣',
-    text: '巫妖第一次被击败时会以 25 生命复活；每两回合在墓地唤起骷髅。',
+    text: '巫妖第一次被击败时会以 15 生命复活；每两回合在墓地唤起一具骷髅。',
     icon: 'soul-vessel',
     kind: 'boss',
     onHeroLethal: async (b, p, hero) => {
       if (p.flags.phylactery) return false;
       p.flags.phylactery = 1;
-      hero.hp = 25;
+      hero.hp = 15;
       await b.emit({ t: 'banner', text: '巫妖从命匣中重生！', sub: '它的灵魂并不在这具躯壳里', tone: 'boss' });
-      await b.emit({ t: 'heal', uid: hero.uid, amount: 25, hp: hero.hp, maxHp: hero.maxHp });
+      await b.emit({ t: 'heal', uid: hero.uid, amount: 15, hp: hero.hp, maxHp: hero.maxHp });
       await b.cleanse(hero);
       return true;
     },
     turnStart: async (b, p) => {
       if (b.round % 2 !== 0) return;
-      let n = 2;
+      let n = 1;
       for (const g of [...b.graves].reverse()) {
         if (n <= 0) break;
         if (b.unitAt(g.x, g.y) || !b.board.standable(b.board.get(g))) continue;

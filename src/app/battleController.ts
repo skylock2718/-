@@ -52,7 +52,8 @@ export class BattleController {
   readonly overlay: Overlay;
   readonly state = new Store<ControllerState>({ mode: { kind: 'idle' }, hover: null, showThreat: false });
   readonly humans: Set<number>;
-  private busy = false;
+  /** true until the opening animation has run, and while actions resolve */
+  private busy = true;
   private disposed = false;
   private offFrame: (() => void) | null = null;
   private listeners: (() => void)[] = [];

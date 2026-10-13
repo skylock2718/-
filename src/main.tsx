@@ -10,7 +10,7 @@ import { initStage } from './app/stage';
 import { app } from './app/game';
 import { audio } from './audio/audio';
 import { App } from './ui/App';
-import { flow } from './run/flow';
+import { debugEndBattle, flow } from './run/flow';
 
 registerContent();
 
@@ -49,3 +49,17 @@ requestAnimationFrame(() => {
 // expose for debugging / automated tests
 (window as unknown as { __app: typeof app; __flow: typeof flow }).__app = app;
 (window as unknown as { __flow: typeof flow }).__flow = flow;
+if (import.meta.env.DEV) {
+  (window as unknown as { __debug: unknown }).__debug = {
+    endBattle: debugEndBattle,
+    /** screen position of a board tile's top centre (for automated UI tests) */
+    tileScreen(x: number, y: number) {
+      const ctl = app.get().battle;
+      if (!ctl) return null;
+      const w = ctl.stage.world;
+      const p = ctl.board.top(x, y).clone().project(w.camera);
+      const r = w.renderer.domElement.getBoundingClientRect();
+      return { x: r.left + ((p.x + 1) / 2) * r.width, y: r.top + ((1 - p.y) / 2) * r.height };
+    },
+  };
+}

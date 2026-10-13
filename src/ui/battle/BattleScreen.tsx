@@ -13,6 +13,7 @@ import { audio } from '../../audio/audio';
 import { CardView } from '../components/CardView';
 import { DMG_COLOR, Icon, NODE_DESC, NODE_ICON, NODE_NAME, STATUS_COLOR, STATUS_DESC, STATUS_ICON, SURFACE_DESC, SURFACE_NAME, TERRAIN_DESC, TERRAIN_NAME, UI_ICONS } from '../icons';
 import { KEYWORD_DESC, keywordLabel, TRIBE_NAMES } from '../text';
+import { useViewport } from '../useViewport';
 
 export function BattleScreen({ ctl }: { ctl: BattleController }) {
   useTicker(battleTick);
@@ -417,9 +418,13 @@ function Hand({ ctl }: { ctl: BattleController }) {
   const p = b.player(ctl.human);
   const mode = useStore(ctl.state, (s) => s.mode);
   const [hover, setHover] = useState<number | null>(null);
+  const vp = useViewport();
   const n = p.hand.length;
   const mid = (n - 1) / 2;
-  const spread = Math.min(64, 520 / Math.max(1, n));
+  const size = vp.w < 600 ? 92 : vp.w < 1000 || vp.h < 700 ? 114 : 132;
+  const k = size / 132;
+  const spread = Math.min(64 * k, (vp.w < 600 ? vp.w - 150 : 520) / Math.max(1, n));
+  const lift = vp.w < 600 ? 1.55 : 1.32;
   return (
     <div class={`hand ${mode.kind === 'replace' ? 'replacing' : ''}`}>
       {p.hand.map((c, i) => {
@@ -428,12 +433,14 @@ function Hand({ ctl }: { ctl: BattleController }) {
         const can = ctl.canInput && b.canPlay(ctl.human, c).ok;
         const hov = hover === c.iid;
         const style: JSX.CSSProperties = {
-          transform: hov || sel ? `translate(${off * spread}px, -64px) scale(1.32)` : `translate(${off * spread}px, ${Math.abs(off) * Math.abs(off) * 3}px) rotate(${off * 4}deg)`,
+          transform: hov || sel ? `translate(${off * spread}px, ${-64 * k}px) scale(${lift})` : `translate(${off * spread}px, ${Math.abs(off) * Math.abs(off) * 3 * k}px) rotate(${off * 4}deg)`,
           zIndex: hov || sel ? 50 : 10 + i,
+          left: `${-size / 2}px`,
+          bottom: `${-26 * k}px`,
         };
         return (
           <div class="hand-slot" style={style} key={c.iid}>
-            <CardView id={c.id} up={c.up} cost={b.costOf(p, c)} size={132} playable={can} selected={sel} dim={!can && mode.kind !== 'replace'} onClick={() => ctl.selectCard(c)} onHover={(o) => setHover((h) => (o ? c.iid : h === c.iid ? null : h))} class="in-hand" />
+            <CardView id={c.id} up={c.up} cost={b.costOf(p, c)} size={size} playable={can} selected={sel} dim={!can && mode.kind !== 'replace'} onClick={() => ctl.selectCard(c)} onHover={(o) => setHover((h) => (o ? c.iid : h === c.iid ? null : h))} class="in-hand" />
             <span class="hotkey">{i + 1}</span>
           </div>
         );

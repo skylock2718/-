@@ -287,6 +287,19 @@ export function concede(): void {
   if (battleEndHandler) battleEndHandler(r);
 }
 
+/** debug / automated tests: resolve the current battle immediately */
+export function debugEndBattle(win: boolean): void {
+  const ctl = app.get().battle;
+  if (!ctl || ctl.ended) return;
+  ctl.ended = true;
+  const b = ctl.battle;
+  const me = [...ctl.humans][0] ?? 0;
+  const other = b.players.find((p) => p.id !== me)!;
+  if (win) other.alive = false;
+  else b.players[me].alive = false;
+  battleEndHandler?.({ winner: win ? me : other.id, battle: b });
+}
+
 // ======================================================================
 // Rewards
 // ======================================================================

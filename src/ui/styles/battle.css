@@ -1578,3 +1578,159 @@
     height: 130px;
   }
 }
+
+/* ---------- phones / narrow windows */
+
+@media (max-width: 760px) {
+  .pbar {
+    top: 6px;
+    gap: 4px;
+  }
+
+  .pbar.me {
+    left: 6px;
+  }
+
+  .pbar.foes {
+    right: 6px;
+  }
+
+  .ppanel {
+    min-width: 0;
+    width: calc(50vw - 10px);
+    gap: 6px;
+    padding: 5px 8px 5px 5px;
+  }
+
+  .pbar.foes .ppanel {
+    padding: 5px 5px 5px 8px;
+  }
+
+  .pp-portrait {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .pp-name {
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pp-name small,
+  .relic-row {
+    display: none;
+  }
+
+  .pp-hp {
+    height: 15px;
+    font-size: 11px;
+  }
+
+  .pp-res {
+    font-size: 11px;
+  }
+
+  .turn-badge {
+    top: auto;
+    bottom: 128px;
+    min-width: 0;
+    padding: 2px 14px 4px;
+    border-radius: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  .tb-round {
+    font-size: 10px;
+  }
+
+  .tb-who {
+    font-size: 16px;
+  }
+
+  .combat-log {
+    display: none;
+  }
+
+  .unit-panel {
+    top: 70px;
+    left: 6px;
+    width: min(250px, 66vw);
+    max-height: 46vh;
+    overflow: auto;
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .cam-controls {
+    left: auto;
+    right: 6px;
+    bottom: auto;
+    top: 70px;
+    flex-direction: column;
+  }
+
+  .cam-controls .btn.icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .dice-zone {
+    width: 190px;
+    right: 6px;
+    bottom: 150px;
+  }
+
+  .dice-tray {
+    height: 100px;
+  }
+
+  .bottom-left {
+    left: 6px;
+    bottom: 6px;
+    transform: scale(0.72);
+    transform-origin: left bottom;
+  }
+
+  .bottom-right {
+    right: 6px;
+    bottom: 6px;
+    transform: scale(0.66);
+    transform-origin: right bottom;
+  }
+
+  .mode-hint {
+    bottom: 168px;
+    max-width: 94vw;
+    font-size: 13px;
+    padding: 4px 6px 4px 12px;
+  }
+
+  .bn-text {
+    font-size: 36px;
+    padding: 4px 30px;
+    letter-spacing: 3px;
+  }
+
+  .bn-sub {
+    font-size: 13px;
+  }
+
+  .played-card {
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  .reroll-prompt {
+    right: 6px;
+    left: 6px;
+    width: auto;
+    bottom: 160px;
+  }
+
+  .hover-tip {
+    display: none;
+  }
+}

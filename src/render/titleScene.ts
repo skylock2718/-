@@ -18,11 +18,13 @@ export class TitleScene {
   private owned: THREE.Object3D[] = [];
   private off: () => void;
   private t = 0;
+  private dieShown = true;
 
   constructor(
     private stage: Stage,
     biome: BiomeId = 'verdant',
     heroes: { icon: string; colors: [string, string, string]; name: string; team: string }[] = [],
+    showDie = true,
   ) {
     stage.reset();
     const world = stage.world;
@@ -49,6 +51,10 @@ export class TitleScene {
     light.position.set(0, 4.2, 0);
     world.fxRoot.add(light);
     this.owned.push(this.halo, light);
+    this.dieShown = showDie;
+    mesh.visible = showDie;
+    this.halo.visible = showDie;
+    light.visible = showDie;
     // standees around the centre
     const spots = [
       { x: 3, y: 5 },
@@ -92,8 +98,8 @@ export class TitleScene {
     (this.halo.material as THREE.SpriteMaterial).opacity = 0.45 + Math.sin(t * 1.3) * 0.12;
     const yaw = this.stage.world.cam.yaw;
     for (const s of this.standees) s.children[1].rotation.y = yaw;
-    // golden motes drifting up from the die
-    if (Math.random() < dt * 14) {
+    // golden motes drifting down from the die
+    if (this.dieShown && Math.random() < dt * 14) {
       const a = Math.random() * Math.PI * 2;
       const r = 0.5 + Math.random() * 1.2;
       this.stage.particles.spawn(new THREE.Vector3(Math.cos(a) * r, this.die.position.y - 0.5, Math.sin(a) * r), new THREE.Vector3(0, -0.6 - Math.random() * 0.6, 0), 0xffd36a, 0.09, 3, 0, 0.1, false);

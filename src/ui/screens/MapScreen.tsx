@@ -8,6 +8,7 @@ import { ACT_NAMES, ACT_SUB, reachableNodes, type NodeKind, type RunNode } from 
 import { Portrait } from '../components/Bits';
 import { Icon, UI_ICONS } from '../icons';
 import { RunHeader } from './RunHeader';
+import { useViewport } from '../useViewport';
 
 export const NODE_INFO: Record<NodeKind, { name: string; icon: string; color: string; desc: string }> = {
   battle: { name: '战斗', icon: UI_ICONS.battle, color: '#d8c8a4', desc: '普通遭遇战。胜利后获得金币、三选一卡牌，可能掉落药水。' },
@@ -32,6 +33,7 @@ export function MapScreen() {
   const run = flow.get().run;
   const scroller = useRef<HTMLDivElement>(null);
   const [hover, setHover] = useState<RunNode | null>(null);
+  const vp = useViewport();
 
   useEffect(() => {
     if (!actIntro) return;
@@ -54,10 +56,10 @@ export function MapScreen() {
   if (!run || !map) return null;
   const reach = new Set(reachableNodes(run).map((n) => n.id));
   const enc = pendingEncounter(run);
-  const width = 640;
+  const width = Math.max(300, Math.min(640, vp.w - 24));
   const pos = (n: RunNode) => {
     if (n.kind === 'boss') return { x: width / 2, y: 70 };
-    const x = ((n.col + 0.5) / map.cols) * (width - 60) + 30 + jitter(n.id, map.act, 1) * 34;
+    const x = ((n.col + 0.5) / map.cols) * (width - 60) + 30 + jitter(n.id, map.act, 1) * 34 * (width / 640);
     const y = height - 60 - n.row * ROW_H + jitter(n.id, map.act, 2) * 26;
     return { x, y };
   };

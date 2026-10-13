@@ -106,6 +106,13 @@ export function CardView(p: CardViewProps) {
               ),
             )}
           </div>
+          {!text && kws.length > 0 && (
+            <div class="card-kwdesc">
+              {kws.slice(0, 2).map((k) => (
+                <div>{KEYWORD_DESC[k.k]}</div>
+              ))}
+            </div>
+          )}
           {def.flavor && !text && kws.length === 0 && <div class="card-flavor">{def.flavor}</div>}
         </div>
         {u && (

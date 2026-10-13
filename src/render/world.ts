@@ -227,7 +227,10 @@ export class CameraRig {
     this.distance += (this.goalDistance - this.distance) * k;
     this.target.lerp(this.goalTarget, k);
     const ce = Math.cos(this.elevation);
-    const pos = new THREE.Vector3(Math.sin(this.azimuth) * ce * this.distance, Math.sin(this.elevation) * this.distance, Math.cos(this.azimuth) * ce * this.distance).add(this.target);
+    // portrait screens see much less horizontally: back the camera off so the board still fits
+    const fit = cam.aspect < 1.2 ? Math.pow(1.2 / cam.aspect, 0.75) : 1;
+    const d = this.distance * fit;
+    const pos = new THREE.Vector3(Math.sin(this.azimuth) * ce * d, Math.sin(this.elevation) * d, Math.cos(this.azimuth) * ce * d).add(this.target);
     if (this.shakeT > 0) {
       this.shakeT -= dt;
       const s = this.shakeI * Math.max(0, this.shakeT) * 4;

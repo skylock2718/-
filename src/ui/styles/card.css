@@ -9,9 +9,11 @@
   --frame2: #5a606c;
   --frame3: #24282e;
   --gem: #9aa4b4;
+  /* one "card unit": children with their own font-size position in --u */
+  --u: calc(var(--cw) / 10);
   width: var(--cw);
   height: calc(var(--cw) * 1.42);
-  font-size: calc(var(--cw) / 10);
+  font-size: var(--u);
   perspective: 700px;
   position: relative;
   cursor: pointer;
@@ -201,27 +203,33 @@
 
 .card-type {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(54% + 1.05em);
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc(54% + 0.92 * var(--u));
+  padding: 0 calc(0.45 * var(--u));
+  border-radius: calc(0.3 * var(--u));
+  background: linear-gradient(180deg, #2a2016, #120c08);
+  box-shadow: 0 0 0 calc(0.06 * var(--u)) rgba(255, 220, 150, 0.35);
+  white-space: nowrap;
   text-align: center;
-  font-size: 0.55em;
-  color: rgba(255, 240, 210, 0.75);
-  letter-spacing: 0.15em;
-  z-index: 2;
+  font-size: calc(0.5 * var(--u));
+  line-height: 1.5;
+  color: rgba(255, 240, 210, 0.85);
+  letter-spacing: 0.12em;
+  z-index: 3;
 }
 
 .card-text {
   position: absolute;
   left: 0.42em;
   right: 0.42em;
-  top: calc(54% + 1.95em);
-  bottom: 1.25em;
+  top: calc(54% + 1.2 * var(--u));
+  bottom: calc(0.75 * var(--u));
   background: linear-gradient(180deg, #f2e6c8, #d8c8a0);
   border-radius: 0.3em;
   box-shadow: inset 0 0 0.6em rgba(90, 60, 20, 0.45);
   color: #2a1e10;
-  padding: 0.3em 0.4em;
+  padding: calc(0.42 * var(--u)) 0.4em 0.3em;
   font-size: 0.6em;
   line-height: 1.4;
   overflow: hidden;
@@ -232,7 +240,7 @@
 }
 
 .t-unit .card-text {
-  bottom: 1.85em;
+  bottom: calc(1.12 * var(--u));
 }
 
 .card-kws {
@@ -257,6 +265,18 @@
 
 .kw-inline {
   color: #7a2a00;
+}
+
+.card-kwdesc {
+  margin-top: 0.25em;
+  font-size: 0.92em;
+  line-height: 1.35;
+  color: #5a4426;
+  text-align: center;
+}
+
+.card-kwdesc div + div {
+  margin-top: 0.2em;
 }
 
 .card-flavor {

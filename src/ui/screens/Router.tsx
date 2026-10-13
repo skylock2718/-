@@ -39,7 +39,7 @@ export function ScreenRouter({ screen }: { screen: Screen }) {
   const act = run?.act ?? 1;
   const inRun = screen === 'map' || screen === 'reward' || screen === 'shop' || screen === 'event' || screen === 'treasure' || screen === 'levelup' || screen === 'rest';
   useEffect(() => {
-    if (inRun && run) showBackdrop((ACT_BIOME[act] || 'verdant') as BiomeId, [run.heroId]);
+    if (inRun && run) showBackdrop((ACT_BIOME[act] || 'verdant') as BiomeId, [run.heroId], false);
     else if (screen === 'end') showBackdrop('astral');
     else showBackdrop('verdant');
   }, [screen, act, inRun, run?.heroId]);
